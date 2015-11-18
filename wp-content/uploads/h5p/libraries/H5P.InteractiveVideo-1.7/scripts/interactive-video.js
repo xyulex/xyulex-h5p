@@ -675,7 +675,7 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
   InteractiveVideo.prototype.attachControls = function ($wrapper) {
     var that = this;
 
-    $wrapper.html('<div class="h5p-controls-left"><a href="#" class="h5p-control h5p-play h5p-pause" title="' + that.l10n.play + '"></a><a href="#" class="h5p-control h5p-bookmarks" title="' + that.l10n.bookmarks + '"></a><div class="h5p-chooser h5p-bookmarks"><h3>' + that.l10n.bookmarks + '</h3></div></div><div class="h5p-controls-right"><a href="#" class="h5p-control h5p-fullscreen"  title="' + that.l10n.fullscreen + '"></a><div href="#" class="h5p-control h5p-subtitles"  title="' + that.l10n.subtitles + '"></div><a href="#" class="h5p-control h5p-subtitles-languages"  title=""></a><a href="#" class="h5p-control h5p-quality h5p-disabled"  title="' + that.l10n.quality + '"></a><div class="h5p-chooser h5p-quality"><h3>' + that.l10n.quality + '</h3></div><a href="#" class="h5p-control h5p-volume"  title="' + that.l10n.mute + '"></a><div class="h5p-control h5p-time"><span class="h5p-current">0:00</span> / <span class="h5p-total">0:00</span></div></div><div class="h5p-control h5p-slider"><div class="h5p-interactions-container"></div><div class="h5p-bookmarks-container"></div><div></div></div>');
+    $wrapper.html('<div class="h5p-controls-left"><a href="#" class="h5p-control h5p-play h5p-pause" title="' + that.l10n.play + '"></a><a href="#" class="h5p-control h5p-bookmarks" title="' + that.l10n.bookmarks + '"></a><div class="h5p-chooser h5p-bookmarks"><h3>' + that.l10n.bookmarks + '</h3></div></div><div class="h5p-controls-right"><a href="#" class="h5p-control h5p-fullscreen"  title="' + that.l10n.fullscreen + '"></a><div href="#" class="h5p-control h5p-subtitles"  title="' + that.l10n.subtitles + '"></div><div href="#" class="h5p-control h5p-subtitles-languages"  title=""></div><a href="#" class="h5p-control h5p-quality h5p-disabled"  title="' + that.l10n.quality + '"></a><div class="h5p-chooser h5p-quality"><h3>' + that.l10n.quality + '</h3></div><a href="#" class="h5p-control h5p-volume"  title="' + that.l10n.mute + '"></a><div class="h5p-control h5p-time"><span class="h5p-current">0:00</span> / <span class="h5p-total">0:00</span></div></div><div class="h5p-control h5p-slider"><div class="h5p-interactions-container"></div><div class="h5p-bookmarks-container"></div><div></div></div>');
     this.controls = {};
 
     // Play/pause button
@@ -768,37 +768,36 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
 
     // <!............ Subtitles by RMA --------------------->
     // Subtitles ON/OFF
+    var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
 
-    //REVISAR ESTO
-  /*  this.controls.$subtitles = $wrapper.find('.h5p-subtitles').click(function () {
-        if (that.controls.$subtitles.hasClass('h5p-subtitlesoff')) {
-        //  that.controls.$subtitles.removeClass('h5p-subtitlesoff').attr('title', that.l10n.subson);
-         // subtitlesDisable();
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
         }
-        else {
-         // that.controls.$subtitles.addClass('h5p-subtitlesoff').attr('title', that.l10n.subsoff);
-        // subtitlesEnable();
-        }
-    });
-    */
+    }
+    };
+    contentId = getUrlParameter('id');
+
 
     $(".h5p-subtitles-languages").hide();
 
+
     // TO DO: Selector de idioma
     // Leer directorio con <FILE>XXXX.srt y montar el desplegable.
-    $(".h5p-subtitles-languages").html("<a class='h5p-subtitles-languages-a h5p-subtitlesoff' onClick=''>OFF</a><br /><a href='#' class='h5p-subtitles-languages-a' onClick=''>es</a><br /><a href='#' class='h5p-subtitles-languages-a' onClick=''>ca</a><br /><a href='#' class='h5p-subtitles-languages-a' onClick=''>en</a>"); // TODO: Automated checks
+    $(".h5p-subtitles-languages").html("<a href='#' class='h5p-subtitles-languages-a h5p-subtitlesoff'>OFF</a><br /><a href='#' class='h5p-subtitles-languages-a'>es</a><br /><a href='#' class='h5p-subtitles-languages-a'>ca</a><br /><a href='#' class='h5p-subtitles-languages-a'>en</a>"); // TODO: Automated checks
 
     $('.h5p-subtitles').click(function () {
-      $(".h5p-subtitles-languages").css({
-                                    "display" : "inline-block",
-                                    "height"  : "120px",
-                                    "bottom"  : "65px"
-      });
+       $(".h5p-subtitles-languages").fadeToggle();
     });
 
     $('.h5p-subtitles-languages-a:not(.h5p-subtitlesoff)').click(function() {
       $(".h5p-subtitles-languages").hide();
-      var subtitlesLanguage = 'test_' + $(this).text() + '.json';
+      var subtitlesLanguage = contentId + "_" + $(this).text() + '.json';
       subtitlesLoad(subtitlesLanguage);
       subtitlesEnable();
     });

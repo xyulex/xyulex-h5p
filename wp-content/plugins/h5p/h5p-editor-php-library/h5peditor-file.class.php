@@ -173,14 +173,13 @@ class H5peditorFile {
   }
 
 //Subtitles RMA
-public function processSRT($filename) {
-
+public function processSRT($filename, $contentId) {
   define('SRT_STATE_SUBNUMBER', 0);
   define('SRT_STATE_TIME',      1);
   define('SRT_STATE_TEXT',      2);
   define('SRT_STATE_BLANK',     3);
 
-  $lines   = file('../wp-content/uploads/h5p/content/1/videos/'.$filename);
+  $lines   = file('../wp-content/uploads/h5p/content/'. $contentId .'/videos/'.$filename);
 
   $subs    = array();
   $state   = SRT_STATE_SUBNUMBER;
@@ -215,14 +214,13 @@ public function processSRT($filename) {
               }
               break;
       }
-
   }
 
   if ($subs) {
      $filenameArray = explode(".", $filename);
       $file = json_encode($subs);
       $finalName = $filenameArray[0].'.json';
-      file_put_contents('../wp-content/uploads/h5p/content/1/videos/'.$finalName, $file);
+      file_put_contents('../wp-content/uploads/h5p/content/'. $contentId .'/videos/'.$contentId.'_'.$finalName, $file);
       return TRUE;
   }
   return FALSE;

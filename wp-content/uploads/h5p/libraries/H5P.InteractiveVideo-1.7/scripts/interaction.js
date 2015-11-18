@@ -741,7 +741,7 @@ H5P.InteractiveVideoInteraction = (function ($, EventDispatcher) {
     videoFormatted = formatTime(videoCurrentTime);
 
     $.ajax({
-                    url: "../wp-content/uploads/h5p/subtitles/" + jsonFilename,
+                    url: "../wp-content/uploads/h5p/content/" + contentId + "/videos/" + jsonFilename,
                     dataType: "text",
                     success: function(data) {
                         var json = $.parseJSON(data);
@@ -770,7 +770,6 @@ H5P.InteractiveVideoInteraction = (function ($, EventDispatcher) {
     seconds = (seconds >= 10) ? seconds : "0" + seconds;
     return '00:' + minutes + ":" + seconds + ",00";
   };
-
   // Subtitles by RMA End
 
   // Extends the event dispatcher

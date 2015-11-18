@@ -846,8 +846,8 @@ class H5PContentAdmin {
       // Keep track of temporary files so they can be cleaned up later.
       $editor->addTmpFile($file);
       // Subtitles RMA
-      $file->processSRT($_FILES['file']['name']);
-      // Subtitles RMA End
+      $file->processSRT($_FILES['file']['name'], $contentId);
+      // Subtitles RMA
     }
 
     header('Cache-Control: no-cache');
