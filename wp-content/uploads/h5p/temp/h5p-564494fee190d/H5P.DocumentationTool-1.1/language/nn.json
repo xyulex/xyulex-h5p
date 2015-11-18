@@ -1,0 +1,22 @@
+{
+  "semantics": [
+    {
+      "label": "Tittel",
+      "default": "Dokumentasjonsverktøy",
+      "description": "Tittel for dokumentasjonsverktøyet"
+    },
+    {
+      "label": "Innhaldselementer",
+      "widgets": [
+        {
+          "label": "Default"
+        }
+      ],
+      "entity": "Element",
+      "field": {
+        "label": "Innhaldstype",
+        "description": "Bibliotek som brukes for dette elementet."
+      }
+    }
+  ]
+}
