@@ -47,6 +47,7 @@ H5PEditor.widgets.video = H5PEditor.widgets.audio = H5PEditor.AV = (function ($)
     var html = H5PEditor.createItem(this.field.type, label + '<div class="file">' + C.createAdd() + '</div><a class="h5p-copyright-button" href="#">' + ns.t('core', 'editCopyright') + '</a><div class="h5p-editor-dialog"><a href="#" class="h5p-close" title="' + ns.t('core', 'close') + '"></a></div>', this.field.description);
 
     var $container = $(html).appendTo($wrapper);
+
     var $file = $container.children('.file');
     this.$add = $file.children('.h5p-add-file').click(function () {
       self.$addDialog.addClass('h5p-open');
@@ -204,7 +205,7 @@ H5PEditor.widgets.video = H5PEditor.widgets.audio = H5PEditor.AV = (function ($)
       H5PEditor.File.$file.attr('accept', 'audio/mpeg,audio/x-wav,audio/ogg');
     }
     else if (this.field.type === 'video') {
-      H5PEditor.File.$file.attr('accept', 'video/mp4,video/webm,video/ogg');
+      H5PEditor.File.$file.attr('accept', 'video/mp4,video/webm,video/ogg,text/plain');
     }
 
     H5PEditor.File.$field.val(JSON.stringify(this.field));

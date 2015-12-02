@@ -152,8 +152,8 @@ class H5peditorFile {
           'video/mp4' => 'mp4',
           'video/webm' => 'webm',
           'video/ogg' => 'ogv',
-          'text/plain' => 'srt'
-        );
+          'text/srt' => 'srt'
+      );
 
         if (!$this->check($allowed)) {
           $this->result->error = $this->interface->t('Invalid video or subtitle format. Use mp4 or webm.');
@@ -162,7 +162,6 @@ class H5peditorFile {
 
         $this->result->mime = $this->type;
         break;
-
 
       case 'file':
         // TODO: Try to get file extension for type and check that it matches the current extension.

@@ -740,19 +740,21 @@ H5P.InteractiveVideoInteraction = (function ($, EventDispatcher) {
     videoCurrentTime = document.getElementsByTagName('video')[0].currentTime;
     videoFormatted = formatTime(videoCurrentTime);
 
-    $.ajax({
-                    url: "../wp-content/uploads/h5p/content/" + contentId + "/videos/" + jsonFilename,
-                    dataType: "text",
-                    success: function(data) {
-                        var json = $.parseJSON(data);
-                        for (var i in json) {
-                          if (videoFormatted > json[i].startTime && videoFormatted < json[i].stopTime) {
-                              $(".h5p-subtitles-wrapper").html("<div><strong>" + json[i].text +"</strong></div>");
+    if (jsonFilename) {
+      $.ajax({
+                      url: "../wp-content/uploads/h5p/content/" + contentId + "/videos/" + jsonFilename,
+                      dataType: "text",
+                      success: function(data) {
+                          var json = $.parseJSON(data);
+                          for (var i in json) {
+                            if (videoFormatted > json[i].startTime && videoFormatted < json[i].stopTime) {
+                                $(".h5p-subtitles-wrapper").html("<div><strong>" + json[i].text +"</strong></div>");
+                            }
                           }
-                        }
-                    }
-    });
-    $('video').attr("ontimeupdate","subtitlesLoad('" + jsonFilename+ "')");
+                      }
+      });
+      $('video').attr("ontimeupdate","subtitlesLoad('" + jsonFilename+ "')");
+    }
   };
 
   self.subtitlesEnable = function () {

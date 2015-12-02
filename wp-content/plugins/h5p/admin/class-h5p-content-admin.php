@@ -846,7 +846,9 @@ class H5PContentAdmin {
       // Keep track of temporary files so they can be cleaned up later.
       $editor->addTmpFile($file);
       // Subtitles RMA
-      $file->processSRT($_FILES['file']['name'], $contentId);
+      if (strpos($_FILES['file']['name'], '.srt') !== false) {
+        $file->processSRT($_FILES['file']['name'], $contentId);
+      }
       // Subtitles RMA
     }
 

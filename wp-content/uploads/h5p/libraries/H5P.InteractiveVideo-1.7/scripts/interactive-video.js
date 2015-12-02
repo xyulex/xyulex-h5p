@@ -77,7 +77,8 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
         sources: self.options.video.files,
         controls: self.justVideo,
         fit: false,
-        poster: self.options.video.poster
+        poster: self.options.video.poster,
+        subtitles: self.options.video.srtfiles // RMA
       }
     }, self.contentId, undefined, undefined, {parent: self});
 
@@ -193,10 +194,6 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
     }
   }
 
-  // RMA Ini
- 
-  //RMA End
-
   // Inheritance
   InteractiveVideo.prototype = Object.create(H5P.EventDispatcher.prototype);
   InteractiveVideo.prototype.constructor = InteractiveVideo;
@@ -265,10 +262,8 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
 
     // Subtitles RMA
     var jsonFilename = '';
-    this.$videoWrapper.find('video').attr("ontimeupdate","subtitlesLoad('test.json')");
+    this.$videoWrapper.find('video').attr("ontimeupdate","subtitlesLoad('"+ jsonFilename+"')");
     // Subtitles RMA END
-
-
 
     if (this.justVideo) {
       this.$videoWrapper.find('video').css('minHeight', '200px');
@@ -783,28 +778,38 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
     };
     contentId = getUrlParameter('id');
 
-
     $(".h5p-subtitles-languages").hide();
 
+    $.ajax({
+      url: "../wp-content/uploads/h5p/libraries/H5P.InteractiveVideo-1.7/scripts/languageDropdown.php",
+      data: "contentId=" + contentId,
+      type: "POST",
+      success: function (data) {
+        if (data) {
+            // SRT found.
+            $(".h5p-subtitles-languages").html(data);
 
-    // TO DO: Selector de idioma
-    // Leer directorio con <FILE>XXXX.srt y montar el desplegable.
-    $(".h5p-subtitles-languages").html("<a href='#' class='h5p-subtitles-languages-a h5p-subtitlesoff'>OFF</a><br /><a href='#' class='h5p-subtitles-languages-a'>es</a><br /><a href='#' class='h5p-subtitles-languages-a'>ca</a><br /><a href='#' class='h5p-subtitles-languages-a'>en</a>"); // TODO: Automated checks
+            $('.h5p-subtitles').click(function () {
+              $(".h5p-subtitles-languages").fadeToggle();
+            });
 
-    $('.h5p-subtitles').click(function () {
-       $(".h5p-subtitles-languages").fadeToggle();
-    });
+            $('.h5p-subtitles-languages-a:not(.h5p-subtitlesoff)').click(function() {
+              console.log("cliK");
+              $(".h5p-subtitles-languages").hide();
+              var subtitlesLanguage = contentId + "_" + $(this).text() + '.json';
+              subtitlesLoad(subtitlesLanguage);
+              subtitlesEnable();
+            });
 
-    $('.h5p-subtitles-languages-a:not(.h5p-subtitlesoff)').click(function() {
-      $(".h5p-subtitles-languages").hide();
-      var subtitlesLanguage = contentId + "_" + $(this).text() + '.json';
-      subtitlesLoad(subtitlesLanguage);
-      subtitlesEnable();
-    });
-
-    $('.h5p-subtitlesoff').click(function () {
-          subtitlesDisable();
-          $(".h5p-subtitles-languages").hide();
+            $('.h5p-subtitlesoff').click(function () {
+                  subtitlesDisable();
+                  $(".h5p-subtitles-languages").hide();
+            });
+          } else {
+                // No SRT Files.
+                $(".h5p-subtitles").hide();
+          }
+        }
     });
     // <!............ Subtitles by RMA END --------------------->
 
@@ -973,6 +978,13 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
     this.$container.css('fontSize', (width > this.width) ? (this.fontSize * (width / this.width)) : this.fontSize + 'px');
 
     this.$container.find('.h5p-chooser').css('maxHeight', (containerHeight - controlsHeight) + 'px');
+
+    // Subtitles RMA
+   /* this.$container.find('.h5p-subtitles-languages').css({
+      'position' : 'absolute',
+      'bottom' : '0px'
+    }); */
+    // Subtitles RMA End
 
     // Resize start screen
     if (!this.editor) {
