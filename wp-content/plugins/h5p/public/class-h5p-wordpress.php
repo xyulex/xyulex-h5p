@@ -879,7 +879,4 @@ class H5PWordPress implements H5PFrameworkInterface {
   // Magic stuff not used, we do not support library development mode.
   public function lockDependencyStorage() {}
   public function unlockDependencyStorage() {}
-
-  
-  
 }

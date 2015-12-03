@@ -837,7 +837,7 @@ class H5PContentAdmin {
    * @since 1.1.0
    */
   public function ajax_files() {
-    global $_FILES, $wpdb;
+    global $wpdb;
     $plugin = H5P_Plugin::get_instance();
     $files_directory = $plugin->get_h5p_path();
 

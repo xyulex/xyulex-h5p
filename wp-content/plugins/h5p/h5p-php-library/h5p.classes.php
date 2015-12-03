@@ -3,10 +3,6 @@
  * Interface defining functions the h5p library needs the framework to implement
  */
 interface H5PFrameworkInterface {
-
-  
-
-
   /**
    * Returns info for the current platform
    *
@@ -1761,7 +1757,6 @@ class H5PCore {
    * @return int Content ID
    */
   public function saveContent($content, $contentMainId = NULL) {
-
     if (isset($content['id'])) {
       $this->h5pF->updateContent($content, $contentMainId);
     }
@@ -1771,8 +1766,6 @@ class H5PCore {
 
     // Some user data for content has to be reset when the content changes.
     $this->h5pF->resetContentUserData($contentMainId ? $contentMainId : $content['id']);
-
-
 
     return $content['id'];
   }
