@@ -28,5 +28,6 @@ if ($idiomaArray) {
     $contenido .= "<a href='#' class='h5p-subtitles-languages-a'>". $idioma . "</a><br />";
   }
 }
+
 echo $contenido;
 ?>

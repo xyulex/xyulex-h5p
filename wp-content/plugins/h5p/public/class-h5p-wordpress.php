@@ -403,7 +403,7 @@ class H5PWordPress implements H5PFrameworkInterface {
       $format[] = '%s';
       $data['user_id'] = get_current_user_id();
       $format[] = '%d';
-      $wpdb->insert($table, $data, $format);
+      $wpdb->insert($table, $data, $format);      
       return $wpdb->insert_id;
     }
     else {
@@ -879,4 +879,7 @@ class H5PWordPress implements H5PFrameworkInterface {
   // Magic stuff not used, we do not support library development mode.
   public function lockDependencyStorage() {}
   public function unlockDependencyStorage() {}
+
+  
+  
 }

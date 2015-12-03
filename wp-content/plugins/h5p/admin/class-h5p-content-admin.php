@@ -448,6 +448,21 @@ class H5PContentAdmin {
 
     // Move images and find all content dependencies
     $editor->processParameters($content['id'], $content['library'], $params, $oldLibrary, $oldParams);
+
+    // RMA
+    $json_a = json_decode($content['params'], true);
+    $files  = $json_a['interactiveVideo']['video']['files'];
+
+    foreach($files as $file) {
+      $path = $file['path'];
+      if (strpos($path, 'srt') !== false) {
+        $pathArray = explode("/" , $path);
+        $filename = $pathArray[1];
+        $core->processSRT($filename, $content['id']);
+      }
+    }
+    // END RMA
+
     return $content['id'];
   }
 
@@ -822,7 +837,7 @@ class H5PContentAdmin {
    * @since 1.1.0
    */
   public function ajax_files() {
-    global $_FILES;
+    global $_FILES, $wpdb;
     $plugin = H5P_Plugin::get_instance();
     $files_directory = $plugin->get_h5p_path();
 
@@ -845,11 +860,6 @@ class H5PContentAdmin {
     if ($file->validate() && $file->copy()) {
       // Keep track of temporary files so they can be cleaned up later.
       $editor->addTmpFile($file);
-      // Subtitles RMA
-      if (strpos($_FILES['file']['name'], '.srt') !== false) {
-        $file->processSRT($_FILES['file']['name'], $contentId);
-      }
-      // Subtitles RMA
     }
 
     header('Cache-Control: no-cache');

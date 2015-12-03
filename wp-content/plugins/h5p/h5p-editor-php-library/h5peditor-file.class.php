@@ -171,61 +171,6 @@ class H5peditorFile {
     return TRUE;
   }
 
-//Subtitles RMA
-public function processSRT($filename, $contentId) {
-  define('SRT_STATE_SUBNUMBER', 0);
-  define('SRT_STATE_TIME',      1);
-  define('SRT_STATE_TEXT',      2);
-  define('SRT_STATE_BLANK',     3);
-
-  $lines   = file('../wp-content/uploads/h5p/content/'. $contentId .'/videos/'.$filename);
-
-  $subs    = array();
-  $state   = SRT_STATE_SUBNUMBER;
-  $subNum  = 0;
-  $subText = '';
-  $subTime = '';
-
-  foreach($lines as $line) {
-     switch($state) {
-          case SRT_STATE_SUBNUMBER:
-              $subNum = trim($line);
-              $state  = SRT_STATE_TIME;
-              break;
-
-          case SRT_STATE_TIME:
-              $subTime = trim($line);
-              $state   = SRT_STATE_TEXT;
-              break;
-
-          case SRT_STATE_TEXT:
-              if (trim($line) == '') {
-                  $sub = array();
-                  $sub['number'] = $subNum;
-                  list($sub['startTime'], $sub['stopTime']) = explode(' --> ', $subTime);
-                  $sub['text']   = $subText;
-                  $subText     = '';
-                  $state       = SRT_STATE_SUBNUMBER;
-
-                  $subs[]      = $sub;
-              } else {
-                  $subText .= utf8_encode($line);
-              }
-              break;
-      }
-  }
-
-  if ($subs) {
-     $filenameArray = explode(".", $filename);
-      $file = json_encode($subs);
-      $finalName = $filenameArray[0].'.json';
-      file_put_contents('../wp-content/uploads/h5p/content/'. $contentId .'/videos/'.$contentId.'_'.$finalName, $file);
-      return TRUE;
-  }
-  return FALSE;
- }
-//Subtitles RMA END
-
  public function copy() {
     $matches = array();
     preg_match('/([a-z0-9]{1,})$/i', $_FILES['file']['name'], $matches);
