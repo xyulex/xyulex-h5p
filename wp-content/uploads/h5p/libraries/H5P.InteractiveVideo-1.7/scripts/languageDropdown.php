@@ -18,7 +18,7 @@ if ($manager = opendir($path)) {
         $langArray[] = $langName[1];
       }
     }
-    closedir($gestor);
+    closedir($manager);
 }
 
 if ($langArray) {
