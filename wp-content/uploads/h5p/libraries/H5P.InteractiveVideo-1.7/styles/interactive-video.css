@@ -462,11 +462,12 @@
 
 .h5p-subtitles-wrapper {
   display: none;
+  margin-left:2%;
   position: absolute;
-  width: 100%;
+  width: 96%;
   height: 50px;
   text-align: center;
-  top: 10px;
+  bottom: 80px;
   font-weight: normal;
   color: white;
 }

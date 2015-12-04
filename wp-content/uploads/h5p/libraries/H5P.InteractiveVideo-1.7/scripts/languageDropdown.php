@@ -2,13 +2,20 @@
 
 $contentId  = filter_input(INPUT_POST, 'contentId', FILTER_VALIDATE_INT);
 $content    = '';
-$langArray = array();
+$langArray  = array();
+
 // No contentId
 if (!$contentId) {
   return false;
 }
 
 $path       = 'c:\xampp\htdocs\wordpress\wp-content\uploads\h5p\content\\'. $contentId .'\videos\\';
+
+$langCodes  = array(
+            'es'  =>  'Es',
+            'ca'  =>  'Ca',
+            'en'  =>  'En'
+);
 
 if ($manager = opendir($path)) {
     while (false !== ($entry = readdir($manager))) {
@@ -25,7 +32,7 @@ if ($langArray) {
   $content = "<a href='#' class='h5p-subtitles-languages-a h5p-subtitlesoff'>OFF</a><br />";
 
   foreach ($langArray as $lang) {
-    $content .= "<a href='#' class='h5p-subtitles-languages-a'>". $lang . "</a><br />";
+    $content .= "<a href='#' class='h5p-subtitles-languages-a' data-lang='". $lang ."'>". $langCodes[$lang] . "</a><br />";
   }
 }
 

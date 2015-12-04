@@ -794,9 +794,8 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
             });
 
             $('.h5p-subtitles-languages-a:not(.h5p-subtitlesoff)').click(function() {
-              console.log("cliK");
               $(".h5p-subtitles-languages").hide();
-              var subtitlesLanguage = contentId + "_" + $(this).text() + '.json';
+              var subtitlesLanguage = contentId + "_" + $(this).data('lang') + '.json';
               subtitlesLoad(subtitlesLanguage);
               subtitlesEnable();
             });
@@ -978,13 +977,6 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
     this.$container.css('fontSize', (width > this.width) ? (this.fontSize * (width / this.width)) : this.fontSize + 'px');
 
     this.$container.find('.h5p-chooser').css('maxHeight', (containerHeight - controlsHeight) + 'px');
-
-    // Subtitles RMA
-   /* this.$container.find('.h5p-subtitles-languages').css({
-      'position' : 'absolute',
-      'bottom' : '0px'
-    }); */
-    // Subtitles RMA End
 
     // Resize start screen
     if (!this.editor) {
