@@ -749,8 +749,15 @@ H5P.InteractiveVideoInteraction = (function ($, EventDispatcher) {
                           for (var i in json) {
                             if (videoFormatted > json[i].startTime && videoFormatted < json[i].stopTime) {
                                 $(".h5p-subtitles-wrapper").html("<div><strong>" + json[i].text +"</strong></div>");
+                            } else {
+                              if (videoFormatted >= json[i].stopTime) {
+                                  $(".h5p-subtitles-wrapper").html("<div><strong>-</strong></div>"); 
+                                }
                             }
                           }
+                           if (videoFormatted >= json[i].stopTime) {
+                                  $(".h5p-subtitles-wrapper").html("<div><strong>-</strong></div>"); 
+                            }
                       }
       });
       $('video').attr("ontimeupdate","subtitlesLoad('" + jsonFilename+ "')");
