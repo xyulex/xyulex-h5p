@@ -742,24 +742,27 @@ H5P.InteractiveVideoInteraction = (function ($, EventDispatcher) {
 
     if (jsonFilename) {
       $.ajax({
-                      url: "../wp-content/uploads/h5p/content/" + contentId + "/videos/" + jsonFilename,
-                      dataType: "text",
-                      success: function(data) {
-                          var json = $.parseJSON(data);
-                          for (var i in json) {
-                            if (videoFormatted > json[i].startTime && videoFormatted < json[i].stopTime) {
-                                $(".h5p-subtitles-wrapper").html("<div><strong>" + json[i].text +"</strong></div>");
-                            } else {
-                              if (videoFormatted >= json[i].stopTime) {
-                                  $(".h5p-subtitles-wrapper").html("<div><strong>-</strong></div>"); 
-                                }
-                            }
+            url: "../wp-content/uploads/h5p/content/" + contentId + "/videos/" + jsonFilename,
+            dataType: "text",
+            success: function(data) {
+                        var jsonSubtitle = $.parseJSON(data);
+
+                        for (var i in jsonSubtitle) {
+                          if (videoFormatted > jsonSubtitle[i].startTime && videoFormatted < jsonSubtitle[i].stopTime) {
+                              $(".h5p-subtitles-wrapper").html("<div><strong>" + jsonSubtitle[i].text +"</strong></div>");
+                          } else {
+                            if (videoFormatted >= jsonSubtitle[i].stopTime) {
+                                $(".h5p-subtitles-wrapper").html("");
+                              }
                           }
-                           if (videoFormatted >= json[i].stopTime) {
-                                  $(".h5p-subtitles-wrapper").html("<div><strong>-</strong></div>"); 
-                            }
+                        }
+
+                        if (videoFormatted >= jsonSubtitle[i].stopTime) {
+                              $(".h5p-subtitles-wrapper").html("");
+                        }
                       }
       });
+
       $('video').attr("ontimeupdate","subtitlesLoad('" + jsonFilename+ "')");
     }
   };
