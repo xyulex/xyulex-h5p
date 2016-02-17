@@ -29,6 +29,11 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
       self.options.video.title = 'Interactive Video';
     }
 
+    if (!self.options.video.audiodescription) {
+      self.options.video.audiodescription = '';
+    }
+
+
     // Set default splash options
     self.startScreenOptions = $.extend({
       hideStartTitle: false,
@@ -47,7 +52,6 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
       quality: 'Video quality',
       unmute: 'Unmute',
       fullscreen: 'Fullscreen',
-      subtitles: 'Subtitles',
       exitFullscreen: 'Exit fullscreen',
       summary: 'Summary',
       bookmarks: 'Bookmarks',
@@ -78,7 +82,7 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
         controls: self.justVideo,
         fit: false,
         poster: self.options.video.poster,
-        subtitles: self.options.video.srtfiles // RMA
+       // subtitles: self.options.video.srtfiles // RMA
       }
     }, self.contentId, undefined, undefined, {parent: self});
 
@@ -247,7 +251,9 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
     this.setActivityStarted();
     this.$container = $container;
 
-    $container.addClass('h5p-interactive-video').html('<div class="h5p-video-wrapper"></div><div class="h5p-subtitles-wrapper"></div><div class="hp5-subtitles-languages"></div><div class="h5p-controls"></div>);');
+    // Audiodescription
+    $container.addClass('h5p-interactive-video').html('<div class="h5p-video-wrapper"></div><div id="h5p-div-audiodescription" class="h5p-audiodescription"></div><div class="h5p-subtitles-wrapper"></div><div class="hp5-subtitles-languages"></div><div class="h5p-controls"></div>);');
+    // Audiodescription end
 
     // Font size is now hardcoded, since some browsers (At least Android
     // native browser) will have scaled down the original CSS font size by the
@@ -324,6 +330,35 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
     if (this.justVideo) {
       return;
     }
+
+    // Audiodescription
+    var state = false;
+    var ogSrc = $wrapper.find('video').attr("src");
+    if (this.options.video.audiodescription) {
+      contentId = that.video.contentId;
+      path = that.options.video.audiodescription[0]['path'];
+      $("#h5p-div-audiodescription").show();
+
+      $(".h5p-audiodescription").click(function() {
+        state = !state;
+        $(this).toggleClass('h5p-audiodescription-off');
+        if (state) {
+          if (path.indexOf('http') > -1 || path.indexOf('www') > -1) {
+            urlContent = path;
+          } else {
+            urlContent = "../wp-content/uploads/h5p/content/" + contentId + "/" + path;
+          }
+          $wrapper.find('video').attr("src", urlContent);
+          $(".h5p-subtitles, .h5p-subtitles-wrapper").hide();
+        } else {
+          $wrapper.find('video').attr("src", ogSrc);
+          $(".h5p-subtitles, .h5p-subtitles-wrapper").show();
+        }
+
+        that.video.play();
+      });
+    }
+    // Audiodescription end
 
     this.$overlay = $('<div class="h5p-overlay h5p-ie-transparent-background"></div>').appendTo($wrapper);
 

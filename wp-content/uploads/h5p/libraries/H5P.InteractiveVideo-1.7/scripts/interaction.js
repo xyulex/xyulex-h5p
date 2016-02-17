@@ -255,6 +255,7 @@ H5P.InteractiveVideoInteraction = (function ($, EventDispatcher) {
         }
       });
 
+
       // Reset link interaction dimensions
       if (library === 'H5P.Link') {
         $interaction.css('height', 'auto');

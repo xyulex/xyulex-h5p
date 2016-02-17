@@ -24,7 +24,7 @@
           },
           {
             "name": "audiodescription",
-            "type": "text",
+            "type": "video",
             "label": "Audio description",
             "description": "Select the name of the video"
           },

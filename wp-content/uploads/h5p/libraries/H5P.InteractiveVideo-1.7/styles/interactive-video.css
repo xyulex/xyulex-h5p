@@ -493,6 +493,33 @@
 }
 /* Subtitles by RMA End */
 
+
+/* Audiodescription by RMA */
+#h5p-div-audiodescription {
+  display: none;
+}
+
+.h5p-audiodescription {
+  height:58px;
+  width:92px;
+  background:url('ad_on.png') no-repeat;
+  position:absolute;
+  top:5px;
+  right:10px;
+  cursor:pointer;
+}
+
+.h5p-audiodescription-off {
+  height:58px;
+  width:92px;
+  background:url('ad_off.png') no-repeat;
+  position:absolute;
+  top:5px;
+  right:10px;
+  cursor:pointer;
+}
+/* Audiodescription end by RMA */
+
 .h5p-interactive-video .h5p-chooser {
   position: absolute;
   z-index: 10;
