@@ -451,7 +451,7 @@ class H5PContentAdmin {
 
     // RMA
     $json_a = json_decode($content['params'], true);
-    $files  = $json_a['interactiveVideo']['video']['files'];
+    $files  = $json_a['interactiveVideo']['video']['srtfiles'];
 
     foreach($files as $file) {
       $path = $file['path'];

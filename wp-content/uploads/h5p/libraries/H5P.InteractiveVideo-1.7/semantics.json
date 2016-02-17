@@ -13,14 +13,20 @@
           {
             "name": "files",
             "type": "video",
-            "label": "Video  & subtitle files",
+            "label": "Video files",
             "description": "Select the video files you wish to use in your interactive video. To ensure maximum support in browsers at least add a version of the video in webm and mp4 formats."
           },
           {
             "name": "srtfiles",
-            "type": "subtitles",
+            "type": "video",
             "label": "Subtitles files",
-            "description": "Select the subtitles files you wish to use in your interactive video. Only SRT supported at the moment."
+            "description": "Select the subtitle files you wish to use in your interactive video, in SRT."
+          },
+          {
+            "name": "audiodescription",
+            "type": "text",
+            "label": "Audio description",
+            "description": "Select the name of the video"
           },
           {
             "name": "poster",
