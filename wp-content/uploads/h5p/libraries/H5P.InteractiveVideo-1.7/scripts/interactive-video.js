@@ -29,9 +29,11 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
       self.options.video.title = 'Interactive Video';
     }
 
+    // AUD-02 Start
     if (!self.options.video.audiodescription) {
       self.options.video.audiodescription = '';
     }
+    // AUD-02 End
 
 
     // Set default splash options
@@ -81,8 +83,7 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
         sources: self.options.video.files,
         controls: self.justVideo,
         fit: false,
-        poster: self.options.video.poster,
-       // subtitles: self.options.video.srtfiles // RMA
+        poster: self.options.video.poster
       }
     }, self.contentId, undefined, undefined, {parent: self});
 
@@ -251,9 +252,9 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
     this.setActivityStarted();
     this.$container = $container;
 
-    // Audiodescription
+    // AUD-03 Start
     $container.addClass('h5p-interactive-video').html('<div class="h5p-video-wrapper"></div><div id="h5p-div-audiodescription" class="h5p-audiodescription"></div><div class="h5p-subtitles-wrapper"></div><div class="hp5-subtitles-languages"></div><div class="h5p-controls"></div>);');
-    // Audiodescription end
+    // AUD-03 End
 
     // Font size is now hardcoded, since some browsers (At least Android
     // native browser) will have scaled down the original CSS font size by the
@@ -266,10 +267,10 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
     this.$videoWrapper = $container.children('.h5p-video-wrapper');
     this.attachVideo(this.$videoWrapper);
 
-    // Subtitles RMA
+    // SBT-05 Start
     var jsonFilename = '';
     this.$videoWrapper.find('video').attr("ontimeupdate","subtitlesLoad('"+ jsonFilename+"')");
-    // Subtitles RMA END
+    // SBT-05 End
 
     if (this.justVideo) {
       this.$videoWrapper.find('video').css('minHeight', '200px');
@@ -331,9 +332,10 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
       return;
     }
 
-    // Audiodescription
+    // AUD-04 Start
     var state = false;
     var ogSrc = $wrapper.find('video').attr("src");
+    var videoDiv = $wrapper.find('video')
     if (this.options.video.audiodescription) {
       contentId = that.video.contentId;
       path = that.options.video.audiodescription[0]['path'];
@@ -348,17 +350,17 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
           } else {
             urlContent = "../wp-content/uploads/h5p/content/" + contentId + "/" + path;
           }
-          $wrapper.find('video').attr("src", urlContent);
+          videoDiv.attr("src", urlContent);
           $(".h5p-subtitles, .h5p-subtitles-wrapper").hide();
         } else {
-          $wrapper.find('video').attr("src", ogSrc);
+          videoDiv.attr("src", ogSrc);
           $(".h5p-subtitles, .h5p-subtitles-wrapper").show();
         }
 
         that.video.play();
       });
     }
-    // Audiodescription end
+    // AUD-04 End
 
     this.$overlay = $('<div class="h5p-overlay h5p-ie-transparent-background"></div>').appendTo($wrapper);
 
@@ -705,7 +707,9 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
   InteractiveVideo.prototype.attachControls = function ($wrapper) {
     var that = this;
 
+    // SBT-06 Start
     $wrapper.html('<div class="h5p-controls-left"><a href="#" class="h5p-control h5p-play h5p-pause" title="' + that.l10n.play + '"></a><a href="#" class="h5p-control h5p-bookmarks" title="' + that.l10n.bookmarks + '"></a><div class="h5p-chooser h5p-bookmarks"><h3>' + that.l10n.bookmarks + '</h3></div></div><div class="h5p-controls-right"><a href="#" class="h5p-control h5p-fullscreen"  title="' + that.l10n.fullscreen + '"></a><div href="#" class="h5p-control h5p-subtitles"  title="' + that.l10n.subtitles + '"></div><div href="#" class="h5p-control h5p-subtitles-languages"  title=""></div><a href="#" class="h5p-control h5p-quality h5p-disabled"  title="' + that.l10n.quality + '"></a><div class="h5p-chooser h5p-quality"><h3>' + that.l10n.quality + '</h3></div><a href="#" class="h5p-control h5p-volume"  title="' + that.l10n.mute + '"></a><div class="h5p-control h5p-time"><span class="h5p-current">0:00</span> / <span class="h5p-total">0:00</span></div></div><div class="h5p-control h5p-slider"><div class="h5p-interactions-container"></div><div class="h5p-bookmarks-container"></div><div></div></div>');
+    // SBT-06 End
     this.controls = {};
 
     // Play/pause button
@@ -796,8 +800,7 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
     }
 
 
-    // <!............ Subtitles by RMA --------------------->
-    // Subtitles ON/OFF
+    // SBT-07 Start
     var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -845,7 +848,7 @@ H5P.InteractiveVideo = (function ($, EventDispatcher, DragNBar, Interaction) {
           }
         }
     });
-    // <!............ Subtitles by RMA END --------------------->
+    // SBT-07 End
 
     // Timer
     var $time = $wrapper.find('.h5p-time');

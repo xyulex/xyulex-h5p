@@ -450,7 +450,7 @@
   content: "\f026";
 }
 
-/* Subtitles by RMA */
+/* SBT-10 Start */
 .h5p-controls {
   position: relative;
 }
@@ -491,10 +491,10 @@
 .h5p-subtitles-languages a:hover {
   text-decoration: underline;
 }
-/* Subtitles by RMA End */
+/* SBT-10 End */
 
 
-/* Audiodescription by RMA */
+/* AUD-05 Start */
 #h5p-div-audiodescription {
   display: none;
 }
@@ -518,7 +518,7 @@
   right:10px;
   cursor:pointer;
 }
-/* Audiodescription end by RMA */
+/* AUD-05 End */
 
 .h5p-interactive-video .h5p-chooser {
   position: absolute;

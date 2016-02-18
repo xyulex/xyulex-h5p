@@ -176,13 +176,13 @@ class H5peditorFile {
     preg_match('/([a-z0-9]{1,})$/i', $_FILES['file']['name'], $matches);
 
     $this->name = uniqid($this->field->name . '-');
-    // Subtitles RMA
+    // SBT-03 Start
     if (isset($matches[0]) && $matches[0] != 'srt') {
       $this->name .= '.' . $matches[0];
     } else {
       $this->name = $_FILES['file']['name'];
     }
-    // Subtitles RMA END
+    // SBT-03 End
 
     $this->name = $this->field->type . 's/' . $this->name;
 

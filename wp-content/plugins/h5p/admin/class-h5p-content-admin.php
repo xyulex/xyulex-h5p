@@ -449,7 +449,7 @@ class H5PContentAdmin {
     // Move images and find all content dependencies
     $editor->processParameters($content['id'], $content['library'], $params, $oldLibrary, $oldParams);
 
-    // RMA
+    // SBT-01 Start
     $json_a = json_decode($content['params'], true);
     $files  = $json_a['interactiveVideo']['video']['srtfiles'];
 
@@ -461,7 +461,7 @@ class H5PContentAdmin {
         $core->processSRT($filename, $content['id']);
       }
     }
-    // END RMA
+    // SBT-01 End
 
     return $content['id'];
   }

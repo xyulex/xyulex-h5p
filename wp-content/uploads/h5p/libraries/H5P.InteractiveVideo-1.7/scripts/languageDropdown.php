@@ -1,5 +1,6 @@
-<?php
 
+<?php
+/* SBT-08 Start */
 $contentId  = filter_input(INPUT_POST, 'contentId', FILTER_VALIDATE_INT);
 $content    = '';
 $langArray  = array();
@@ -38,4 +39,5 @@ if ($langArray) {
 }
 
 echo $content;
+/* SBT-08 End */
 ?>

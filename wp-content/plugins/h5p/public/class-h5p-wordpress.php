@@ -150,7 +150,7 @@ class H5PWordPress implements H5PFrameworkInterface {
    * Implements isInDevMode
    */
   public function isInDevMode() {
-    return false;
+    return true;
   }
 
   /**

@@ -736,7 +736,7 @@ H5P.InteractiveVideoInteraction = (function ($, EventDispatcher) {
     self.reCreate();
   }
 
-  // Subtitles by RMA
+  // SBT-04 Start
   self.subtitlesLoad = function (jsonFilename) {
     videoCurrentTime = document.getElementsByTagName('video')[0].currentTime;
     videoFormatted = formatTime(videoCurrentTime);
@@ -783,7 +783,7 @@ H5P.InteractiveVideoInteraction = (function ($, EventDispatcher) {
     seconds = (seconds >= 10) ? seconds : "0" + seconds;
     return '00:' + minutes + ":" + seconds + ",00";
   };
-  // Subtitles by RMA End
+  // SBT-04 End
 
   // Extends the event dispatcher
   Interaction.prototype = Object.create(EventDispatcher.prototype);

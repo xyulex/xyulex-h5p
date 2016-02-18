@@ -1629,6 +1629,7 @@ Class H5PExport {
  */
 class H5PCore {
 
+  // SBT-02 Start
   public function processSRT($filename, $contentId) {
     define('SRT_STATE_SUBNUMBER', 0);
     define('SRT_STATE_TIME',      1);
@@ -1681,6 +1682,7 @@ class H5PCore {
       }
       return FALSE;
      }
+     // SBT-02 End
 
   public static $coreApi = array(
     'majorVersion' => 1,

@@ -20,13 +20,15 @@
             "name": "srtfiles",
             "type": "video",
             "label": "Subtitles files",
-            "description": "Select the subtitle files you wish to use in your interactive video, in SRT."
+            "description": "Select the subtitle files you wish to use in your interactive video, in SRT.",
+            "comment" : "SBT-09"
           },
           {
             "name": "audiodescription",
             "type": "video",
             "label": "Audio description",
-            "description": "Select the name of the video"
+            "description": "Select the name of the video",
+            "comment" : "AUD-01"
           },
           {
             "name": "poster",
